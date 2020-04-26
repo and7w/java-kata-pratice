@@ -15,6 +15,14 @@ package kata.tdd.markov;
                                 [{word = libres, followedWord = "les", percentage = "100"}],
                                 [{word = les, followedWord = "", percentage = "50"}]]
 
+5. "les hommes libres  et les hommes fachés" = [{word = les, followedWord = "hommes", percentage = "100"},
+                                [{word = hommes, followedWord = "libres", percentage = "50"}],
+                                [{word = libres, followedWord = "et", percentage = "100"}],
+                                [{word = et, followedWord = "les", percentage = "100"}],
+                                [{word = hommes, followedWord = "faches", percentage = "50"}],
+                                [{word = faches, followedWord = "", percentage = "100"}]]
+
+
  */
 
 
@@ -111,26 +119,30 @@ public class TextAnalyserTest {
     }
 
     @Test
-    public void shouldReturn50ForWordLesXXX(){
+    public void shouldReturn50ForWordLesYYY(){
         //given
         TextAnalyser textAnalyser = new TextAnalyser();
 
         //when
-        List<WordStatistic> statistics = textAnalyser.analyse("les hommes libres sont les plus sages et les libres sont content");
+        List<WordStatistic> statistics = textAnalyser.analyse("les hommes libres et les hommes faches");
 
         //then
-        Assertions.assertThat(statistics.size()).isEqualTo(4);
-        WordStatistic expectedStat1s = new WordStatistic("les", "hommes", 50.0);
-        WordStatistic expectedStat2s = new WordStatistic("hommes", "libres", 100.0);
-        WordStatistic expectedStat3s = new WordStatistic("libres", "les", 100.0);
-        WordStatistic expectedStat4s = new WordStatistic("les", "", 50.0);
+        Assertions.assertThat(statistics.size()).isEqualTo(6);
+        WordStatistic expectedStat1s = new WordStatistic("les", "hommes", 100.0);
+        WordStatistic expectedStat2s = new WordStatistic("hommes", "libres", 50.0);
+        WordStatistic expectedStat3s = new WordStatistic("libres", "et", 100.0);
+        WordStatistic expectedStat4s = new WordStatistic("et", "les", 100.0);
+        WordStatistic expectedStat5s = new WordStatistic("hommes", "faches", 50.0);
+        WordStatistic expectedStat6s = new WordStatistic("faches", "", 100.0);
+
         Assertions.assertThat(statistics.get(0)).isEqualToComparingFieldByField(expectedStat1s);
         Assertions.assertThat(statistics.get(1)).isEqualToComparingFieldByField(expectedStat2s);
         Assertions.assertThat(statistics.get(2)).isEqualToComparingFieldByField(expectedStat3s);
         Assertions.assertThat(statistics.get(3)).isEqualToComparingFieldByField(expectedStat4s);
+        Assertions.assertThat(statistics.get(4)).isEqualToComparingFieldByField(expectedStat5s);
+        Assertions.assertThat(statistics.get(5)).isEqualToComparingFieldByField(expectedStat6s);
 
     }
-
 
 
 
