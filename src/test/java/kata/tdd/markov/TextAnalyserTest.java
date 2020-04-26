@@ -110,6 +110,27 @@ public class TextAnalyserTest {
 
     }
 
+    @Test
+    public void shouldReturn50ForWordLesXXX(){
+        //given
+        TextAnalyser textAnalyser = new TextAnalyser();
+
+        //when
+        List<WordStatistic> statistics = textAnalyser.analyse("les hommes libres sont les plus sages et les libres sont content");
+
+        //then
+        Assertions.assertThat(statistics.size()).isEqualTo(4);
+        WordStatistic expectedStat1s = new WordStatistic("les", "hommes", 50.0);
+        WordStatistic expectedStat2s = new WordStatistic("hommes", "libres", 100.0);
+        WordStatistic expectedStat3s = new WordStatistic("libres", "les", 100.0);
+        WordStatistic expectedStat4s = new WordStatistic("les", "", 50.0);
+        Assertions.assertThat(statistics.get(0)).isEqualToComparingFieldByField(expectedStat1s);
+        Assertions.assertThat(statistics.get(1)).isEqualToComparingFieldByField(expectedStat2s);
+        Assertions.assertThat(statistics.get(2)).isEqualToComparingFieldByField(expectedStat3s);
+        Assertions.assertThat(statistics.get(3)).isEqualToComparingFieldByField(expectedStat4s);
+
+    }
+
 
 
 
